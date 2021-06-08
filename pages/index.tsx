@@ -3,16 +3,16 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { useCart ,useAuth} from "@saleor/sdk";
 import { first } from 'lodash';
-import {useRouter} from 'next/router';
+import useTranslation from "next-translate/useTranslation";
 
 export default function Home() {
-  const {locale} = useRouter();
+  let {t} = useTranslation();
 const {items}= useCart();
 const { authenticated}=useAuth();
 console.log({authenticated});
   return (
    
-    <div>{locale}</div>
+    <div>{t('common:hello')}</div>
       
   );
 }
