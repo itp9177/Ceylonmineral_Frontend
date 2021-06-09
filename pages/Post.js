@@ -1,5 +1,6 @@
 import  { useState } from "react";
-import { gql, useQuery } from 'apollo-client';
+import gql from 'graphql-tag';
+import { useQuery } from 'apollo-client';
 import { useProductList } from "@saleor/sdk";
 
 function getResp(response) {
@@ -11,7 +12,7 @@ function Post() {
     let [val,setVal] = useState([]);
     
       
-      const req = gql`{
+      const REQ = gql`{
         products(first: 5) {
           edges {
             node {
@@ -21,9 +22,9 @@ function Post() {
             }
           }
         }
-      }`
+      }`;
    client.query({
-        query: req,
+        query: REQ,
         variables: { limit: 5 },
   })
   .then((response) => setVal(getResp(response.data)))
