@@ -4,7 +4,7 @@ import { ApolloClient } from 'apollo-client';
 import { SaleorProvider,ProductFilterInput,} from "@saleor/sdk";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { HttpLink } from "apollo-link-http";
-
+import { ApolloProvider } from '@apollo/react-hooks';
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: new HttpLink({
@@ -25,11 +25,11 @@ const apolloConfig = {
 const config = { apiUrl: "https://demo.saleor.io/graphql/" ,channel: "",};
 function MyApp({ Component, pageProps }: AppProps) {
   return(
-    
+    <ApolloProvider client={client}>
   <SaleorProvider config={config} >
      <Component {...pageProps} />
      </SaleorProvider>
-     
+     </ApolloProvider>
   )
 }
 export default MyApp

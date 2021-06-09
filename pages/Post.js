@@ -1,39 +1,32 @@
 import  { useState } from "react";
-import { gql, useQuery } from 'apollo-client';
+import gql from 'graphql-tag';
 import { useProductList } from "@saleor/sdk";
+import { useQuery } from '@apollo/react-hooks'
 
-function getResp(response) {
-  // console.log(response.products.edges[0].node.name);
-    return response.products.edges;
-}
+const GET_DOGS = gql`
+  {
+    products(first: 5) {
+      edges {
+        node {
+          id
+          name
+          description
+        }
+      }
+    }
+  }
+`;
 
 function Post() {
-    let [val,setVal] = useState([]);
-    
-      
-      const req = gql`{
-        products(first: 5) {
-          edges {
-            node {
-              id
-              name
-              description
-            }
-          }
-        }
-      }`
-   client.query({
-        query: req,
-        variables: { limit: 5 },
-  })
-  .then((response) => setVal(getResp(response.data)))
-  .catch((err) => console.error("error!: " + err));
+  const { loading, error, data } = useQuery(GET_DOGS);
 
-    return (
-      <div>
-        <Check response={val} />
-      </div>
-    )
+  if (loading) return 'Loading...';
+  if (error) return `Error! ${error.message}`;
+  console.log(data);
+  return (
+    <div>
+      hello
+    </div>
+  );
 }
-
 export default Post

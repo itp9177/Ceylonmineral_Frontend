@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@apollo/react-hooks": "^4.0.0",
     "@babel/plugin-transform-typescript": "^7.12.1",
     "@babel/runtime": "^7.5.5",
     "@editorjs/editorjs": "^2.19.0",
