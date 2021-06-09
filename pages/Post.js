@@ -1,7 +1,7 @@
 import  { useState } from "react";
 import gql from 'graphql-tag';
-import { useQuery } from 'apollo-client';
-import { useProductList } from "@saleor/sdk";
+import { Query } from 'react-apollo';
+//import { useProductList } from "@saleor/sdk";
 
 function getResp(response) {
   // console.log(response.products.edges[0].node.name);
@@ -23,18 +23,23 @@ function Post() {
           }
         }
       }`;
-   client.query({
-        query: REQ,
-        variables: { limit: 5 },
-  })
-  .then((response) => setVal(getResp(response.data)))
-  .catch((err) => console.error("error!: " + err));
 
-    return (
-      <div>
-        <Check response={val} />
-      </div>
-    )
+  <Query query={REQ}>
+    {({ loading, error, data }) => {
+      if (loading) return null;
+      if (error) return `Error! ${error}`;
+      setVal(getResp(data));
+      console.log(data);
+      
+    }}
+</Query>
+console.log(val);
+          return (
+            <div>
+              Hello {val}
+            </div>
+            
+            )
 }
 
 export default Post
