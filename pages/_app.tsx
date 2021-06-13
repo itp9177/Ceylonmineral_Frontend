@@ -5,6 +5,7 @@ import { SaleorProvider,ProductFilterInput,} from "@saleor/sdk";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { HttpLink } from "apollo-link-http";
 import { ApolloProvider } from '@apollo/react-hooks';
+import useTranslation from "next-translate/useTranslation";
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: new HttpLink({
@@ -21,13 +22,14 @@ const apolloConfig = {
   */
 };
 
-
+  
 const config = { apiUrl: "https://demo.saleor.io/graphql/" ,channel: "",};
 function MyApp({ Component, pageProps }: AppProps) {
+  let {t} = useTranslation();
   return(
     <ApolloProvider client={client}>
   <SaleorProvider config={config} >
-     <Component {...pageProps} />
+     <Component {...pageProps} t={t}/>
      </SaleorProvider>
      </ApolloProvider>
   )
